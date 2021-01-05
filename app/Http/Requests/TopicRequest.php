@@ -10,32 +10,30 @@ class TopicRequest extends Request
         {
             // CREATE
             case 'POST':
-            {
-                return [
-                    // CREATE ROLES
-                ];
-            }
-            // UPDATE
+                // UPDATE
             case 'PUT':
             case 'PATCH':
             {
                 return [
-                    // UPDATE ROLES
+                    'title'       => 'required|min:2',
+                    'body'        => 'required|min:3',
+                    'category_id' => 'required|numeric',
                 ];
             }
             case 'GET':
             case 'DELETE':
             default:
-            {
-                return [];
-            }
+                {
+                    return [];
+                };
         }
     }
 
     public function messages()
     {
         return [
-            // Validation messages
+            'title.min' => 'Title must be at least two characters',
+            'body.min' => 'Article content must be at least three characters',
         ];
     }
 }
