@@ -11,6 +11,8 @@
 
     <title>@yield('title', 'LaraBBS') - Laravel Advance</title>
 
+    <meta name="description" content="@yield('description', 'LaraBBS forum')" />
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
