@@ -30,7 +30,7 @@
                                     @include('shared._error')
 
                                     <div class="form-group">
-                                        <input class="form-control" type="text" name="title" value="{{ old('title', $topic->title ) }}" placeholder="请填写标题" required />
+                                        <input class="form-control" type="text" name="title" value="{{ old('title', $topic->title ) }}" placeholder="Please fill in the title" required />
                                     </div>
 
                                     <div class="form-group">
@@ -71,6 +71,16 @@
         $(document).ready(function() {
             var editor = new Simditor({
                 textarea: $('#editor'),
+                upload: {
+                    url: '{{ route('topics.upload_image') }}',
+                    params: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    fileKey: 'upload_file',
+                    connectionCount: 3,
+                    leaveConfirm: 'The file is uploading, closing this page will cancel the upload.'
+                },
+                pasteImage: true,
             });
         });
     </script>
