@@ -42,6 +42,11 @@ return array(
             'roles',
             'permissions',
         ],
+        'Content management' => [
+            'categories',
+            'topics',
+            'replies',
+        ],
     ],
 
     /*
@@ -61,10 +66,10 @@ return array(
      * 如值为 `true`，将使用 `dashboard_view` 定义的视图文件渲染页面；
      * 如值为 `false`，将使用 `home_page` 定义的菜单条目来作为后台主页。
      */
-    'use_dashboard' => true,
+    'use_dashboard' => false,
 
     // 设置后台主页视图文件，由 `use_dashboard` 选项决定
-    'dashboard_view' => 'asd',
+    'dashboard_view' => '',
 
     // 用来作为后台主页的菜单条目，由 `use_dashboard` 选项决定，菜单指的是 `menu` 选项
     'home_page' => 'users',
