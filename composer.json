@@ -10,9 +10,10 @@
     "require": {
         "php": "^7.3|^8.0",
         "clicksend/clicksend-php": "^5.0",
-        "doctrine/dbalw": "^3.0",
+        "doctrine/dbal": "^3.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "gregwar/captcha": "^1.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.12",

@@ -7,7 +7,16 @@ class VerificationCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|phone:AU,mobile|unique:users',
+            'captcha_key' => 'required|string',
+            'captcha_code' => 'required|string',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'captcha_key' => 'Captcha key',
+            'captcha_code' => 'Captcha code',
         ];
     }
 }
