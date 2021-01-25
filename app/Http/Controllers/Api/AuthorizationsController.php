@@ -73,6 +73,9 @@ class AuthorizationsController extends Controller
                     ]);
                 }
 
+                $ttl = 365*24*60;
+                $token = \Auth::guard('api')->setTTL($ttl)->login($user);
+
                 break;
         }
 
