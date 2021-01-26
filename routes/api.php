@@ -37,6 +37,11 @@ Route::prefix('v1')
             ->group(function () {
                 // 游客可以访问的接口
 
+                // 话题列表，详情
+                Route::resource('topics', 'TopicsController')->only([
+                    'index', 'show'
+                ]);
+
                 // 某个用户的详情
                 Route::get('users/{user}', 'UsersController@show')
                     ->name('users.show');
@@ -55,6 +60,10 @@ Route::prefix('v1')
                     // 分类列表
                     Route::get('categories', 'CategoriesController@index')
                         ->name('categories.index');
+                    // 发布话题
+                    Route::resource('topics', 'TopicsController')->only([
+                        'store', 'update', 'destroy'
+                    ]);
                 });
             });
     });
