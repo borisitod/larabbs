@@ -62,8 +62,14 @@ Route::prefix('v1')
                         ->name('categories.index');
                     // 发布话题
                     Route::resource('topics', 'TopicsController')->only([
-                        'store', 'update', 'destroy'
+                        'store', 'update', 'destroy', 'index', 'show'
                     ]);
+                    // 话题回复列表
+                    Route::get('topics/{topic}/replies', 'RepliesController@index')
+                        ->name('topics.replies.index');
+                    // 某个用户的回复列表
+                    Route::get('users/{user}/replies', 'RepliesController@userIndex')
+                        ->name('users.replies.index');
                     // 发布回复
                     Route::post('topics/{topic}/replies', 'RepliesController@store')
                         ->name('topics.replies.store');
