@@ -64,6 +64,9 @@ Route::prefix('v1')
                     Route::resource('topics', 'TopicsController')->only([
                         'store', 'update', 'destroy', 'index', 'show'
                     ]);
+                    // 某个用户发布的话题
+                    Route::get('users/{user}/topics', 'TopicsController@userIndex')
+                        ->name('users.topics.index');
                     // 话题回复列表
                     Route::get('topics/{topic}/replies', 'RepliesController@index')
                         ->name('topics.replies.index');
@@ -76,9 +79,9 @@ Route::prefix('v1')
                     // 删除回复
                     Route::delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
                         ->name('topics.replies.destroy');
-                    // 某个用户发布的话题
-                    Route::get('users/{user}/topics', 'TopicsController@userIndex')
-                        ->name('users.topics.index');
+                    // 通知列表
+                    Route::get('notifications', 'NotificationsController@index')
+                        ->name('notifications.index');
                 });
             });
     });
