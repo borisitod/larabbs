@@ -8,7 +8,7 @@ use App\Http\Resources\NotificationResource;
 class NotificationsController extends Controller
 {
     public function index(Request $request)
-    {
+    {App\Policies\TopicPolicy
         $notifications = $request->user()->notifications()->paginate();
 
         return NotificationResource::collection($notifications);
