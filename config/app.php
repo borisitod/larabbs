@@ -174,7 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\ClickSendServiceProvider::class,
+        App\Providers\ClickSendServiceProvider::class
+        App\Providers\JpushServiceProvider::class,
 
         'Mews\Captcha\CaptchaServiceProvider',
 
