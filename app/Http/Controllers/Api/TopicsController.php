@@ -56,4 +56,15 @@ class TopicsController extends Controller
 
         return response(null, 204);
     }
+
+    public function testDeleteTopic()
+    {
+        $topic = $this->makeTopic();
+        $response = $this->JWTActingAs($this->user)
+            ->json('DELETE', '/api/v1/topics/'.$topic->id);
+        $response->assertStatus(204);
+
+        $response = $this->json('GET', '/api/v1/topics/'.$topic->id);
+        $response->assertStatus(404);
+    }
 }

@@ -1,7 +1,18 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
 Route::prefix('v1')
     ->namespace('Api')
     ->middleware('change-locale')
@@ -36,16 +47,31 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
-                // 游客可以访问的接口
-
+                // 某个用户的详情
+                Route::get('users/{user}', 'UsersController@show')
+                    ->name('users.show');
+                // 分类列表
+                Route::get('categories', 'CategoriesController@index')
+                    ->name('categories.index');
+                // 某个用户发布的话题
+                Route::get('users/{user}/topics', 'TopicsController@userIndex')
+                    ->name('users.topics.index');
                 // 话题列表，详情
                 Route::resource('topics', 'TopicsController')->only([
                     'index', 'show'
                 ]);
-
-                // 某个用户的详情
-                Route::get('users/{user}', 'UsersController@show')
-                    ->name('users.show');
+                // 话题回复列表
+                Route::get('topics/{topic}/replies', 'RepliesController@index')
+                    ->name('topics.replies.index');
+                // 某个用户的回复列表
+                Route::get('users/{user}/replies', 'RepliesController@userIndex')
+                    ->name('users.replies.index');
+                // 资源推荐
+                Route::get('links', 'LinksController@index')
+                    ->name('links.index');
+                // 活跃用户
+                Route::get('actived/users', 'UsersController@activedIndex')
+                    ->name('actived.users.index');
 
                 // 登录后可以访问的接口
                 Route::middleware('auth:api')->group(function() {
@@ -55,25 +81,13 @@ Route::prefix('v1')
                     // 编辑登录用户信息
                     Route::patch('user', 'UsersController@update')
                         ->name('user.update');
-                    // 某个用户的详情RepliesController.php
+                    // 上传图片
                     Route::post('images', 'ImagesController@store')
                         ->name('images.store');
-                    // 分类列表
-                    Route::get('categories', 'CategoriesController@index')
-                        ->name('categories.index');
                     // 发布话题
                     Route::resource('topics', 'TopicsController')->only([
-                        'store', 'update', 'destroy', 'index', 'show'
+                        'store', 'update', 'destroy'
                     ]);
-                    // 某个用户发布的话题
-                    Route::get('users/{user}/topics', 'TopicsController@userIndex')
-                        ->name('users.topics.index');
-                    // 话题回复列表
-                    Route::get('topics/{topic}/replies', 'RepliesController@index')
-                        ->name('topics.replies.index');
-                    // 某个用户的回复列表
-                    Route::get('users/{user}/replies', 'RepliesController@userIndex')
-                        ->name('users.replies.index');
                     // 发布回复
                     Route::post('topics/{topic}/replies', 'RepliesController@store')
                         ->name('topics.replies.store');
@@ -92,12 +106,6 @@ Route::prefix('v1')
                     // 当前登录用户权限
                     Route::get('user/permissions', 'PermissionsController@index')
                         ->name('user.permissions.index');
-                    // 资源推荐
-                    Route::get('links', 'LinksController@index')
-                        ->name('links.index');
-                    // 活跃用户
-                    Route::get('actived/users', 'UsersController@activedIndex')
-                        ->name('actived.users.index');
                 });
             });
     });
