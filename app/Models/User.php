@@ -9,19 +9,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Auth;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
+class User extends Authenticatable implements MustVerifyEmailContract
 {
-    use HasRoles;
-    use HasFactory, MustVerifyEmailTrait;
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
+    use HasRoles;
+    use HasFactory, MustVerifyEmailTrait;
 
     use Notifiable {
         notify as protected laravelNotify;
     }
-
     public function notify($instance)
     {
         // 如果要通知的人是当前用户，就不必通知了！
@@ -37,15 +35,10 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         $this->laravelNotify($instance);
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
-        'email',
         'phone',
+        'email',
         'password',
         'introduction',
         'avatar',
@@ -54,11 +47,6 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         'registration_id'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -66,11 +54,6 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         'weixin_unionid'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -119,15 +102,5 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         }
 
         $this->attributes['avatar'] = $path;
-    }
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 }
